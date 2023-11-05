@@ -1,0 +1,56 @@
+//file :part10.cpp
+//purpose:message altering to avoid censorship
+//Author:shouq mohamed desokey
+//section:s22
+//ID:20220166
+//TA:rana abdelkader
+//Date:28/11/2023
+
+
+#include<iostream>
+#include<fstream>
+#include <vector>
+using namespace std ;
+
+struct altering{
+    string word ;
+    vector <string > alternatives ;
+
+}
+;
+
+int main(){
+    vector <altering> t ={{{"فلسطين"},{"فلسطي/ن","فل*سطين"}},{{"غزة"},{"غز/ة","غ*زة"}},{{"حماس"},{"حم/اس","حما*س"}},
+                          {{"احتلال"},{"احتلا/ل","احتل*ال"}}
+    };
+
+
+    string line ;
+    ofstream wri_te ;
+    wri_te.open ("test.txt",ios::binary);
+    while (wri_te){
+        getline(cin ,line);
+
+        if(line =="-1")
+            break ;
+
+        wri_te<< line << endl ;
+
+    }
+  wri_te.close();
+
+    ifstream rea_de;
+    rea_de.open("test.txt",ios::binary) ;
+    while(getline(rea_de,line)){
+
+        for (int i =0 ;i< t.size();i++){
+            if(t[i].word ==line){
+                line = t[i].alternatives[0];
+            }
+        }
+        cout<< line << " ";
+    }
+
+    rea_de.close();
+    return 0 ;
+}
